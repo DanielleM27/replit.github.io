@@ -1,0 +1,159 @@
+
+
+# Using database on Replit
+
+
+In this tutorial, we will be covering how to connect to the database on Replit, create a table, and cover the basics of database-backend software "CRUD" (Create, Read, Update, Delete) operations. 
+
+
+## Let's get started
+
+
+Firstly we will create a ```Connection``` object which will be representing the database by adding the first two lines to our ```main.py``` file which will be: 
+```python 
+import sqlite3
+connection = sqlite3.connect("mydb.sqlite")
+```
+We connect to the database by using ```sqlite3```This database will track the "CRUD" operations. When we import sqlite3,  our program gets access to the database. The connection function will interact with the database in the ```mydb.sqlite``` file. 
+
+Next we will create a cursor object called ```execute()```  because we have already connected to the database. ```cursor = connection.cursor()```
+The curser object allows us to send statements to the database we connected to using ```cursor.execute()```
+
+
+Now we want to create the table to store the data which we will code as follows:
+```python
+cursor.execute("""CREATE TABLE PRODUCTS (name TEXT, price_cents INTEGER)""")
+```
+
+The table we've created will take a name of a product in text format and the price of the product in cents under integer. 
+
+
+
+
+Now that we've created our table we will move on to insert data into our table. 
+```python
+cursor.execute("INSERT INTO PRODUCTS (name, price_cents) VALUES ('A    pple', 150)")
+cursor.execute("INSERT INTO PRODUCTS (name, price_cents) VALUES ('Banana', 70)")
+```
+
+
+
+Before we can add an item to the table we start with ```cursor.execute() ```to insert both those rows and ```INSERT``` gives a message to the database to add rows to the table. 
+Before we can move on from this line of code we need to first commit the added rows, in other terms save the rows. We save our block of code by ending it with the following: ```connection.commit()```
+
+
+
+
+So now that we've connected to our database, added a cursor, created a table and added two rows to the table, your code should look like this: 
+```python 
+import sqlite3
+
+connection = sqlite3.connect("mydb.sqlite")
+cursor = connection.cursor()
+
+cursor.execute("""CREATE TABLE PRODUCTS (name TEXT, price_cents INTEGER)""")
+
+
+
+cursor.execute("INSERT INTO PRODUCTS (name, price_cents) VALUES ('A    pple', 150)")
+cursor.execute("INSERT INTO PRODUCTS (name, price_cents) VALUES ('Banana', 70)")
+connection.commit()
+```
+
+
+
+We want our database to read the data in our tables so we will add
+```python
+for product in cursor.execute("SELECT * FROM PRODUCTS"):
+    print(product)
+print("--")
+``` 
+This code will allow the data in the rows to be read and printed out in your console. 
+
+
+Next, we will add an Update statement so that the rows in the database can be modified anytime by the user with the following:
+```python
+cursor.execute("UPDATE PRODUCTS SET price_cents = 160 WHERE name = 'Apple'")
+connection.commit()
+``` 
+
+
+
+
+We added an update statement so the user can update the name of the product and the price of the product and the database will automatically save that information because we ended with ```connection.commit()```
+
+
+Lastly, we want to ensure that the user can delete items in the database so we can add 
+```python
+cursor.execute("DELETE FROM PRODUCTS where name = 'Apple'")
+connection.commit()
+```
+and allow the row to be deleted and it will then be saved with ```commit()```
+
+
+Your code should look like the following: 
+```python
+import sqlite3
+
+connection = sqlite3.connect("mydb.sqlite")
+cursor = connection.cursor()
+
+cursor.execute("""CREATE TABLE PRODUCTS (name TEXT, price_cents INTEGER)""")
+
+
+
+cursor.execute("INSERT INTO PRODUCTS (name, price_cents) VALUES ('Apple', 150)")
+cursor.execute("INSERT INTO PRODUCTS (name, price_cents) VALUES ('Banana', 70)")
+connection.commit()
+
+
+for product in cursor.execute("SELECT * FROM PRODUCTS"):
+    print(product)
+print("--")
+
+
+
+
+cursor.execute("UPDATE PRODUCTS SET price_cents = 160 WHERE name = 'Apple'")
+connection.commit()
+
+
+
+
+
+for product in cursor.execute("SELECT * FROM PRODUCTS"):
+    print(product)
+print("--")
+
+
+
+
+
+cursor.execute("DELETE FROM PRODUCTS where name = 'Apple'")
+connection.commit()
+
+
+
+
+for product in cursor.execute("SELECT * FROM PRODUCTS"):
+    print(product)
+```
+
+
+
+
+# Things to try: 
+
+
+You can run the following code in the link below and try it out for yourself
+https://replit.com/@DanielleMurray/Database-on-Replit#main.py
+
+
+
+
+
+
+
+
+You can also read the link below on File persistence in Hosted Apps
+https://blog.replit.com/filesystem-persistence-for-all
