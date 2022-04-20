@@ -111,7 +111,11 @@
       {
         "name": "Database FAQ",
         "slug": "database-faq"
-      }
+      },
+      {
+        "name": "Using database on Replit",
+        "slug": "using-database-on-replit"
+       }
     ]
   },
   {
