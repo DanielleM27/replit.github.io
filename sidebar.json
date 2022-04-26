@@ -69,6 +69,10 @@
       {
         "name": "Debugging",
         "slug": "debugging"
+      },
+      {
+        "name": "Configuring the IDE",
+        "slug": "configuring-the-ide"
       }
     ]
   },
